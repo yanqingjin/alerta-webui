@@ -458,7 +458,10 @@ export default {
       id: { text: i18n.t('AlertId'), value: 'id' },
       resource: { text: i18n.t('Resource'), value: 'resource' },
       event: { text: i18n.t('Event'), value: 'event' },
-      environment: { text: i18n.t('Environment'), value: 'environment' },
+      environment: {
+        text: 'Project', // i18n.t('Environment'),
+        value: 'environment'
+      },
       severity: { text: i18n.t('Severity'), value: 'severity' },
       correlate: { text: i18n.t('Correlate'), value: 'correlate' },
       status: { text: i18n.t('Status'), value: 'status' },

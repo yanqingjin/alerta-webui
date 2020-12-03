@@ -427,7 +427,11 @@ export default {
         useKeysAsHeaders: true,
       }
       let attrs = {}
-      data.map(d => Object.keys(d.attributes).forEach((attr) => attrs['attributes.'+attr] = d.attributes[attr]))
+      data.map(d => {
+        d.project = d.environment
+        delete d.environment
+        Object.keys(d.attributes).forEach((attr) => attrs['attributes.'+attr] = d.attributes[attr])
+      })
 
       const csvExporter = new ExportToCsv(options)
       csvExporter.generateCsv(data.map(({ correlate, service, tags, attributes, rawData, history, ...item }) => ({
