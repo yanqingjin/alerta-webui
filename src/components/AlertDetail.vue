@@ -548,9 +548,7 @@
                       </div>
                     </div>
                     <div class="flex xs6 text-xs-left">
-                      <div>
-                        <span v-html="item.text" />
-                      </div>
+                      <div>{{ item.text }}</div>
                     </div>
                   </div>
                 </div>
@@ -679,9 +677,7 @@
                       </div>
                     </div>
                     <div class="flex xs6 text-xs-left">
-                      <div
-                        v-html="value"
-                      />
+                      <div>{{ value }}</div>
                     </div>
                   </div>
                 </div>

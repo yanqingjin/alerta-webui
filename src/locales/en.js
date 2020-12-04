@@ -88,6 +88,7 @@ export const en = {
   Customer: 'Customer',
   Service: 'Service',
   Environment: 'Environment',
+  Project: 'Project',
   Resource: 'Resource',
   Event: 'Event',
   Correlate: 'Correlate',
