@@ -402,6 +402,20 @@
                   <div class="d-flex align-top">
                     <div class="flex xs3 text-xs-left">
                       <div class="grey--text">
+                        {{ $t('Project') }}
+                      </div>
+                    </div>
+                    <div class="flex xs6 text-xs-left">
+                      <div>
+                        {{ item.project }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex xs12 ma-1">
+                  <div class="d-flex align-top">
+                    <div class="flex xs3 text-xs-left">
+                      <div class="grey--text">
                         {{ $t('Resource') }}
                       </div>
                     </div>
