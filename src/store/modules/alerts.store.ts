@@ -335,15 +335,15 @@ const getters = {
   projects: state => {
     return state.projects.map(p => p.project).sort()
   },
-  environments: state => {
-    return state.environments.map(e => e.environment).sort()
-  },
   counts: state => {
     return state.projects.reduce((grp, p) => {
       grp[p.project] = p.count
       grp['ALL'] = grp['ALL'] + p.count
       return grp
     }, {'ALL': 0})
+  },
+  environments: state => {
+    return state.environments.map(e => e.environment).sort()
   },
   services: state => {
     return state.services.map(s => s.service).sort()
