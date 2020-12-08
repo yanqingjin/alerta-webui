@@ -246,9 +246,6 @@ export default {
     projects() {
       return ['ALL'].concat(this.$store.getters['alerts/projects'])
     },
-    environments() {
-      return ['ALL'].concat(this.$store.getters['alerts/environments'])
-    },
     projectCounts() {
       return this.$store.getters['alerts/counts']
     },
