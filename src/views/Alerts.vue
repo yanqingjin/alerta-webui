@@ -128,7 +128,7 @@
             {{ $t('DisplayDensity') }}
           </v-list-tile>
           <v-list-tile
-            @click="toCsv(alertsByEnvironment)"
+            @click="toCsv(alertsByProject)"
           >
             {{ $t('DownloadAsCsv') }}
           </v-list-tile>
