@@ -84,14 +84,14 @@
               {{ props.item.event }}
             </span>
             <span
-              v-if="col == 'environment'"
-            >
-              {{ props.item.environment }}
-            </span>
-            <span
               v-if="col == 'project'"
             >
               {{ props.item.project }}
+            </span>
+            <span
+              v-if="col == 'environment'"
+            >
+              {{ props.item.environment }}
             </span>
             <span
               v-if="col == 'severity'"
@@ -463,8 +463,8 @@ export default {
       id: { text: i18n.t('AlertId'), value: 'id' },
       resource: { text: i18n.t('Resource'), value: 'resource' },
       event: { text: i18n.t('Event'), value: 'event' },
-      environment: { text: i18n.t('Environment'), value: 'environment' },
       project: { text: i18n.t('Project'), value: 'project' },
+      environment: { text: i18n.t('Environment'), value: 'environment' },
       severity: { text: i18n.t('Severity'), value: 'severity' },
       correlate: { text: i18n.t('Correlate'), value: 'correlate' },
       status: { text: i18n.t('Status'), value: 'status' },

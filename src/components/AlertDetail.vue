@@ -388,12 +388,12 @@
                   <div class="d-flex align-top">
                     <div class="flex xs3 text-xs-left">
                       <div class="grey--text">
-                        {{ $t('Environment') }}
+                        {{ $t('Project') }}
                       </div>
                     </div>
                     <div class="flex xs6 text-xs-left">
                       <div>
-                        {{ item.environment }}
+                        {{ item.project }}
                       </div>
                     </div>
                   </div>
@@ -402,12 +402,12 @@
                   <div class="d-flex align-top">
                     <div class="flex xs3 text-xs-left">
                       <div class="grey--text">
-                        {{ $t('Project') }}
+                        {{ $t('Environment') }}
                       </div>
                     </div>
                     <div class="flex xs6 text-xs-left">
                       <div>
-                        {{ item.project }}
+                        {{ item.environment }}
                       </div>
                     </div>
                   </div>

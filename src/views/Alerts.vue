@@ -84,12 +84,12 @@
     >
       <v-tabs-slider />
       <v-tab
-        v-for="env in environments"
-        :key="env"
-        :href="'#tab-' + env"
-        @click="setEnv(env)"
+        v-for="proj in projects"
+        :key="proj"
+        :href="'#tab-' + proj"
+        @click="setProj(proj)"
       >
-        {{ env }}&nbsp;({{ environmentCounts[env] || 0 }})
+        {{ proj }}&nbsp;({{ projectCounts[proj] || 0 }})
       </v-tab>
       <v-spacer />
       <v-btn
@@ -141,14 +141,14 @@
         v-model="currentTab"
       >
         <v-tab-item
-          v-for="env in environments"
-          :key="env"
-          :value="'tab-' + env"
+          v-for="proj in projects"
+          :key="proj"
+          :value="'tab-' + proj"
           :transition="false"
           :reverse-transition="false"
         >
           <alert-list
-            :alerts="alertsByEnvironment"
+            :alerts="alertsByProject"
             @set-alert="setAlert"
           />
         </v-tab-item>
@@ -212,7 +212,7 @@ export default {
       return this.$config.audio.new || this.$store.getters.getPreference('audioURL')
     },
     defaultTab() {
-      return this.filter.environment ? `tab-${this.filter.environment}` : 'tab-ALL'
+      return this.filter.project ? `tab-${this.filter.project}` : 'tab-ALL'
     },
     filter() {
       return this.$store.state.alerts.filter
@@ -237,20 +237,22 @@ export default {
     },
     isNewOpenAlerts() {
       return this.alerts
-        .filter(alert => this.filter.environment ? this.filter.environment == alert.environment : true)
+        // ???
+        .filter(alert => this.filter.project ? this.filter.project == alert.project : true)
+        // .filter(alert => this.filter.environment ? this.filter.environment == alert.environment : true)
         .filter(alert => alert.status == 'open')
         .reduce((acc, alert) => acc || !alert.repeat, false)
     },
-    environments() {
-      return ['ALL'].concat(this.$store.getters['alerts/environments'])
+    projects() {
+      return ['ALL'].concat(this.$store.getters['alerts/projects'])
     },
-    environmentCounts() {
+    projectCounts() {
       return this.$store.getters['alerts/counts']
     },
-    alertsByEnvironment() {
+    alertsByProject() {
       return this.alerts.filter(alert =>
-        this.filter.environment
-          ? alert.environment === this.filter.environment
+        this.filter.project
+          ? alert.project === this.filter.project
           : true
       )
     },
@@ -298,7 +300,7 @@ export default {
         history.pushState(null, null, this.$store.getters['alerts/getHash'])
         this.currentTab = this.defaultTab
         this.getAlerts()
-        this.getEnvironments()
+        this.getProjects()
       },
       deep: true
     },
@@ -311,12 +313,12 @@ export default {
           oldVal.descending != newVal.descending
         ) {
           this.getAlerts()
-          this.getEnvironments()
+          this.getProjects()
         }
       }
     },
     refresh(val) {
-      val || this.getAlerts() && this.getEnvironments()
+      val || this.getAlerts() && this.getProjects()
     },
     showPanel(val) {
       history.pushState(null, null, this.$store.getters['alerts/getHash'])
@@ -347,6 +349,8 @@ export default {
     },
     setFilter(filter) {
       this.$store.dispatch('alerts/setFilter', {
+        project: filter.project,
+        // TODO
         environment: filter.environment,
         text: filter.text,
         status: filter.status ? filter.status.split(',') : null,
@@ -374,15 +378,15 @@ export default {
     getAlerts() {
       return this.$store.dispatch('alerts/getAlerts')
     },
-    getEnvironments() {
-      this.$store.dispatch('alerts/getEnvironments')
+    getProjects() {
+      this.$store.dispatch('alerts/getProjects')
     },
     playSound() {
       !this.isMute && this.$refs.audio.play()
     },
-    setEnv(env) {
+    setProj(proj) {
       this.$store.dispatch('alerts/setFilter', {
-        environment: env === 'ALL' ? null : env
+        project: proj === 'ALL' ? null : proj
       })
     },
     setAlert(item) {
@@ -392,12 +396,12 @@ export default {
       this.detailDialog = true
     },
     refreshAlerts() {
-      this.getEnvironments()
       this.getAlerts()
         .then(() => {
           this.isNewOpenAlerts && this.playSound()
           this.timer = setTimeout(() => this.refreshAlerts(), this.refreshInterval)
         })
+      this.getProjects()
     },
     cancelTimer() {
       if (this.timer) {
@@ -418,7 +422,7 @@ export default {
     toCsv(data) {
       const options = {
         fieldSeparator: ',',
-        filename: `Alerts_${this.filter.environment || 'ALL'}`,
+        filename: `Alerts_${this.filter.project || 'ALL'}`,
         quoteStrings: '"',
         decimalSeparator: 'locale',
         showLabels: true,
