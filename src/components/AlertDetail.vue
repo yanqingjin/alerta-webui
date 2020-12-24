@@ -738,8 +738,9 @@
                       </div>
                       <div
                         v-else-if="typeof value === 'string' && (value.includes('http://') || value.includes('https://'))"
-                        v-html="value"
-                      />
+                      >
+                        {{ value }}
+                      </div>
                       <div
                         v-else
                         class="clickable"

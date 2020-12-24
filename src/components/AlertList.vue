@@ -133,7 +133,7 @@
             >
               <div class="fixed-table">
                 <div class="text-truncate">
-                  <span v-html="props.item.value" />
+                  <span>{{ props.item.value }}</span>
                 </div>
               </div>
             </span>

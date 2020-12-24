@@ -1,4 +1,4 @@
-import Axios, { AxiosResponse, AxiosInstance } from 'axios'
+import Axios, { AxiosInstance } from 'axios'
 
 class Config {
   private config: any = {}
@@ -31,7 +31,7 @@ class Config {
         return this.setRemoteConfig(response)
       })
       .catch((error: any) => {
-        console.log(error)
+        // console.log(error)
         throw(error)
       })
   }
@@ -58,7 +58,8 @@ class Config {
       .get(`${basePath}config.json`)
       .then(response => response.data)
       .catch((error: any) => {
-        console.warn(error.message)
+        // console.warn(error.message)
+        throw(error)
       })
   }
 
