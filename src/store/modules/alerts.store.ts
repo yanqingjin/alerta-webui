@@ -11,6 +11,7 @@ const state = {
 
   alerts: [],
   selected: [], // used by multi-select checkboxes
+  projects: [],
   environments: [],
   services: [],
   groups: [],
@@ -31,6 +32,10 @@ const state = {
   // query, filter and pagination
   query: {}, // URLSearchParams
   filter: {  // local defaults
+    project: null,
+    // 按我目前的理解，env相当于“降级”了
+    // 所以1. env相关 get / set 会有变化 2. 可能需要在filter里增加env的input
+    // 目前功能ok但是未必“完整”
     environment: null,
     text: null,
     status: ['open', 'ack'],
@@ -80,6 +85,9 @@ const mutations = {
   SET_NOTES(state, notes): any {
     state.notes = notes
   },
+  SET_PPROJECTS(state, projects): any {
+    state.projects = projects
+  },
   SET_ENVIRONMENTS(state, environments): any {
     state.environments = environments
   },
@@ -122,6 +130,7 @@ const actions = {
     let params = new URLSearchParams(state.query)
 
     // append filter params to query params
+    state.filter.project && params.append('project', state.filter.project)
     state.filter.environment && params.append('environment', state.filter.environment)
     state.filter.status && state.filter.status.map(st => params.append('status', st))
     state.filter.customer && state.filter.customer.map(c => params.append('customer', c))
@@ -181,13 +190,11 @@ const actions = {
   updateSelected({ commit }, selected) {
     commit('SET_SELECTED', selected)
   },
-
   getAlert({ commit }, alertId) {
     return AlertsApi.getAlert(alertId).then(({ alert }) => {
       commit('SET_ALERT', alert)
     })
   },
-
   watchAlert({ commit, dispatch, rootState}, alertId) {
     const username = rootState.auth.payload.preferred_username
     const tag = `watch:${username}`
@@ -211,7 +218,6 @@ const actions = {
   untagAlert({ commit, dispatch }, [alertId, tags]) {
     return AlertsApi.untagAlert(alertId, tags)
   },
-
   addNote({ commit, dispatch }, [alertId, text]) {
     return AlertsApi.addNote(alertId, {
       text: text
@@ -232,12 +238,10 @@ const actions = {
       dispatch('getNotes', [alertId])
     )
   },
-
   deleteAlert({ commit, dispatch }, alertId) {
     return AlertsApi.deleteAlert(alertId)
   },
-
-  getEnvironments({ commit, state }) {
+  getProjects({ commit, state }) {
     // get "lucene" query params (?q=)
     let params = new URLSearchParams(state.query)
 
@@ -271,7 +275,12 @@ const actions = {
       )
     }
 
-    return AlertsApi.getEnvironments(params)
+    return AlertsApi.getProjects(params)
+      .then(({ projects }) => commit('SET_PPROJECTS', projects))
+  },
+  // 目前的搜索“拿掉”了env
+  getEnvironments({ commit }) {
+    return AlertsApi.getEnvironments({})
       .then(({ environments }) => commit('SET_ENVIRONMENTS', environments))
   },
   getServices({ commit }) {
@@ -323,15 +332,18 @@ const getters = {
       return state.alerts
     }
   },
-  environments: state => {
-    return state.environments.map(e => e.environment).sort()
+  projects: state => {
+    return state.projects.map(p => p.project).sort()
   },
   counts: state => {
-    return state.environments.reduce((grp, e) => {
-      grp[e.environment] = e.count
-      grp['ALL'] = grp['ALL'] + e.count
+    return state.projects.reduce((grp, p) => {
+      grp[p.project] = p.count
+      grp['ALL'] = grp['ALL'] + p.count
       return grp
     }, {'ALL': 0})
+  },
+  environments: state => {
+    return state.environments.map(e => e.environment).sort()
   },
   services: state => {
     return state.services.map(s => s.service).sort()

@@ -78,11 +78,15 @@ export default {
     }
     return api.get('/alerts/top10/standing', config)
   },
-
   deleteAlert(alertId: string) {
     return api.delete(`/alert/${alertId}`)
   },
-
+  getProjects(query: object) {
+    let config = {
+      params: query
+    }
+    return api.get('/projects', config)
+  },
   getEnvironments(query: object) {
     let config = {
       params: query

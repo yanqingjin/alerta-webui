@@ -388,6 +388,20 @@
                   <div class="d-flex align-top">
                     <div class="flex xs3 text-xs-left">
                       <div class="grey--text">
+                        {{ $t('Project') }}
+                      </div>
+                    </div>
+                    <div class="flex xs6 text-xs-left">
+                      <div>
+                        {{ item.project }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex xs12 ma-1">
+                  <div class="d-flex align-top">
+                    <div class="flex xs3 text-xs-left">
+                      <div class="grey--text">
                         {{ $t('Environment') }}
                       </div>
                     </div>
@@ -534,9 +548,7 @@
                       </div>
                     </div>
                     <div class="flex xs6 text-xs-left">
-                      <div>
-                        <span v-html="item.text" />
-                      </div>
+                      <div>{{ item.text }}</div>
                     </div>
                   </div>
                 </div>
@@ -665,9 +677,7 @@
                       </div>
                     </div>
                     <div class="flex xs6 text-xs-left">
-                      <div
-                        v-html="value"
-                      />
+                      <div>{{ value }}</div>
                     </div>
                   </div>
                 </div>
