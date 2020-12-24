@@ -84,6 +84,11 @@
               {{ props.item.event }}
             </span>
             <span
+              v-if="col == 'project'"
+            >
+              {{ props.item.project }}
+            </span>
+            <span
               v-if="col == 'environment'"
             >
               {{ props.item.environment }}
@@ -137,7 +142,7 @@
             >
               <div class="fixed-table">
                 <div class="text-truncate">
-                  <span v-html="props.item.text" />
+                  <span>{{ props.item.text }}</span>
                 </div>
               </div>
             </span>
@@ -155,7 +160,7 @@
             <span
               v-if="props.item.attributes.hasOwnProperty(col)"
             >
-              <span v-html="props.item.attributes[col]" />
+              {{ props.item.attributes[col] }}
             </span>
             <span
               v-if="col == 'origin'"
@@ -475,6 +480,7 @@ export default {
       id: { text: i18n.t('AlertId'), value: 'id' },
       resource: { text: i18n.t('Resource'), value: 'resource' },
       event: { text: i18n.t('Event'), value: 'event' },
+      project: { text: i18n.t('Project'), value: 'project' },
       environment: { text: i18n.t('Environment'), value: 'environment' },
       severity: { text: i18n.t('Severity'), value: 'severity' },
       correlate: { text: i18n.t('Correlate'), value: 'correlate' },
