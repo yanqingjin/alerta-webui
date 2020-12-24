@@ -131,7 +131,11 @@
             <span
               v-if="col == 'value'"
             >
-              {{ props.item.value }}
+              <div class="fixed-table">
+                <div class="text-truncate">
+                  <span>{{ props.item.value }}</span>
+                </div>
+              </div>
             </span>
             <span
               v-if="col == 'text'"
@@ -395,6 +399,19 @@
                   delete
                 </v-icon>
               </v-btn>
+              <!-- <v-btn
+                flat
+                icon
+                small
+                class="btn--plain pa-0 ma-0"
+                @click.stop="clipboardCopy(JSON.stringify(props.item, null, 4))"
+              >
+                <v-icon
+                  :size="fontSize"
+                >
+                  content_copy
+                </v-icon>
+              </v-btn> -->
 
               <v-menu
                 bottom
@@ -457,7 +474,7 @@ export default {
       default: () => []
     }
   },
-  data: () => ({
+  data: vm => ({
     search: '',
     headersMap: {
       id: { text: i18n.t('AlertId'), value: 'id' },
@@ -470,8 +487,8 @@ export default {
       status: { text: i18n.t('Status'), value: 'status' },
       service: { text: i18n.t('Service'), value: 'service' },
       group: { text: i18n.t('Group'), value: 'group' },
-      value: { text: i18n.t('Value'), value: 'value' },
-      text: { text: i18n.t('Description'), value: 'text' },
+      value: { text: i18n.t('Value'), value: 'value', width: vm.valueWidth() },
+      text: { text: i18n.t('Description'), value: 'text', width: vm.textWidth() },
       tags: { text: i18n.t('Tags'), value: 'tags' },
       attributes: { text: i18n.t('Attribute'), value: 'attributes' },
       origin: { text: i18n.t('Origin'), value: 'origin' },
@@ -583,11 +600,19 @@ export default {
       const note = item.history.filter(h => h.type == 'note').pop()
       return note ? note.text : ''
     },
+    valueWidth() {
+      return this.$store.getters.getPreference('valueWidth')
+    },
+    textWidth() {
+      return this.$store.getters.getPreference('textWidth')
+    },
     severityColor(severity) {
       return this.$store.getters.getConfig('colors').severity[severity] || 'white'
     },
     selectItem(item) {
-      this.$emit('set-alert', item)
+      if (!this.selected.length) {
+        this.$emit('set-alert', item)
+      }
     },
     isOpen(status) {
       return status == 'open' || status == 'NORM'
@@ -634,6 +659,14 @@ export default {
         this.$store.dispatch('alerts/deleteAlert', id)
           .then(() => this.$store.dispatch('alerts/getAlerts'))
     }, 200, {leading: true, trailing: false}),
+    clipboardCopy(text) {
+      let textarea = document.createElement('textarea')
+      textarea.textContent = text
+      document.body.appendChild(textarea)
+      textarea.select()
+      document.execCommand('copy')
+      document.body.removeChild(textarea)
+    }
   }
 }
 </script>

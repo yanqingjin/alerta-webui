@@ -128,7 +128,7 @@
                   xs12
                 >
                   <v-text-field
-                    v-model="editedItem.resource"
+                    v-model.trim="editedItem.resource"
                     :label="$t('Resource')"
                   />
                 </v-flex>
@@ -136,7 +136,7 @@
                   xs12
                 >
                   <v-text-field
-                    v-model="editedItem.event"
+                    v-model.trim="editedItem.event"
                     :label="$t('Event')"
                   />
                 </v-flex>
@@ -144,7 +144,7 @@
                   xs12
                 >
                   <v-text-field
-                    v-model="editedItem.group"
+                    v-model.trim="editedItem.group"
                     :label="$t('Group')"
                   />
                 </v-flex>
@@ -184,7 +184,7 @@
                   xs12
                 >
                   <v-text-field
-                    v-model="editedItem.text"
+                    v-model.trim="editedItem.text"
                     :label="$t('Reason')"
                   />
                 </v-flex>
@@ -635,6 +635,8 @@ export default {
     },
     copyItem(item) {
       this.editedItem = Object.assign({}, item)
+      this.editedItem.period = this.defaultTimes()
+      this.editedId = null
       this.dialog = true
     },
     deleteItem(item) {
@@ -683,6 +685,7 @@ export default {
         this.$store.dispatch(
           'blackouts/createBlackout',
           Object.assign(this.editedItem, {
+            id: null,
             startTime: this.toISODate(
               this.editedItem.period.startDate,
               this.editedItem.period.startTime

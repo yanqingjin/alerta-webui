@@ -82,7 +82,6 @@
       class="px-1"
       grow
     >
-      <v-tabs-slider />
       <v-tab
         v-for="proj in projects"
         :key="proj"

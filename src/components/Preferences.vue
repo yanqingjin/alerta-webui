@@ -167,6 +167,22 @@
             />
 
             <v-combobox
+              v-model.number="valueWidth"
+              :items="valueWidthOptions"
+              :label="$t('ValueWidth')"
+              type="number"
+              suffix="px"
+            />
+
+            <v-combobox
+              v-model.number="textWidth"
+              :items="textWidthOptions"
+              :label="$t('DescriptionWidth')"
+              type="number"
+              suffix="px"
+            />
+
+            <v-combobox
               v-model.number="refreshInterval"
               :items="refreshOptions"
               :label="$t('RefreshInterval')"
@@ -258,6 +274,8 @@ export default {
     ],
     fontSizeLabels: ['tiny', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'huge'],
     fontWeightLabels: [ 'thin', '', '', 'normal', '', '', 'bold', '', 'heavy'],
+    valueWidthOptions: [50, 100, 150, 200],  // px
+    textWidthOptions: [200, 400, 600, 800],  // px
     refreshOptions: [2, 5, 10, 30, 60],  // seconds
     ackTimeoutOptions: [0, 60, 120, 240, 480, 1440],  // minutes
     shelveTimeoutOptions: [60, 120, 240, 480, 1440],  // minutes
@@ -424,6 +442,30 @@ export default {
       },
       set(value) {
         this.$store.dispatch('setUserPrefs', {rowsPerPage: value})
+      }
+    },
+    valueWidth: {
+      get() {
+        return (
+          (this.$store.getters.getPreference('valueWidth') ||
+            this.$store.getters.getConfig('value_Width')))
+      },
+      set(value) {
+        this.$store.dispatch('setUserPrefs', {
+          valueWidth: value
+        })
+      }
+    },
+    textWidth: {
+      get() {
+        return (
+          (this.$store.getters.getPreference('textWidth') ||
+            this.$store.getters.getConfig('text_Width')))
+      },
+      set(value) {
+        this.$store.dispatch('setUserPrefs', {
+          textWidth: value
+        })
       }
     },
     refreshInterval: {

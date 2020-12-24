@@ -1,4 +1,4 @@
-import Axios, { AxiosResponse, AxiosInstance } from 'axios'
+import Axios, { AxiosInstance } from 'axios'
 
 class Config {
   private config: any = {}
@@ -31,7 +31,7 @@ class Config {
         return this.setRemoteConfig(response)
       })
       .catch((error: any) => {
-        console.log(error)
+        // console.log(error)
         throw(error)
       })
   }
@@ -58,7 +58,8 @@ class Config {
       .get(`${basePath}config.json`)
       .then(response => response.data)
       .catch((error: any) => {
-        console.warn(error.message)
+        // console.warn(error.message)
+        throw(error)
       })
   }
 
@@ -68,11 +69,10 @@ class Config {
       .then(response => response.data)
       .catch((error: any) => {
         alert(
-          'ERROR: Failed to connect to Alerta API due to missing or invalid ' +
-          'config.json file.\n\n' +
-          'Please confirm a config.json file exists, contains an "endpoint" ' +
-          'setting and is in the same directory as the application index.html ' +
-          'file.'
+          `ERROR: Failed to retrieve client config from Alerta API endpoint ${endpoint}/config.\n\n` +
+          'This could be due to the API not being available, or to a missing or invalid ' +
+          'config.json file. Please confirm a config.json file exists, contains an "endpoint" ' +
+          'setting and is in the same directory as the application index.html file.'
         )
         throw(error)
       })
