@@ -21,7 +21,7 @@ const getDefaults = () => {
       'font-weight': null
     },
     rowsPerPage: 20,
-    refreshInterval: 5*1000,  // milliseconds
+    refreshInterval: 5 * 1000,  // milliseconds
     ackTimeout: null,
     shelveTimeout: null
   }
@@ -41,7 +41,7 @@ const mutations = {
 const actions = {
   getUserPrefs({ dispatch, commit }) {
     return UsersApi.getMeAttributes()
-      .then(({ attributes }) =>  {
+      .then(({ attributes }) => {
         //i18n.locale = attributes.prefs.languagePref
         commit('SET_PREFS', attributes.prefs)
       })
