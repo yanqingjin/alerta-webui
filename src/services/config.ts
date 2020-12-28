@@ -42,12 +42,12 @@ class Config {
       if (process.env.VUE_APP_ALERTA_ENDPOINT) {
         envConfig['endpoint'] = process.env.VUE_APP_ALERTA_ENDPOINT
       }
-      if (process.env.VUE_APP_CLIENT_ID) {
-        envConfig['client_id'] = process.env.VUE_APP_CLIENT_ID
-      }
-      if (process.env.VUE_APP_TRACKING_ID) {
-        envConfig['tracking_id'] = process.env.VUE_APP_TRACKING_ID
-      }
+      // if (process.env.VUE_APP_CLIENT_ID) {
+      //   envConfig['client_id'] = process.env.VUE_APP_CLIENT_ID
+      // }
+      // if (process.env.VUE_APP_TRACKING_ID) {
+      //   envConfig['tracking_id'] = process.env.VUE_APP_TRACKING_ID
+      // }
       resolve(envConfig)
     })
   }

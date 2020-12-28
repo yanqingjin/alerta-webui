@@ -33,17 +33,19 @@ const api = {
     data?: any,
     config?: AxiosRequestConfig
   ) {
-    let t0 = performance.now()
-    return axios.request({ ...config, url, method, data }).then(response => {
-      let t1 = performance.now()
-      Vue.prototype.$track('timing_complete', {
-        name: method,
-        event_category: 'API',
-        event_label: url,
-        value: Math.round(t1 - t0)
-      })
-      return response.data
-    })
+    // let t0 = performance.now()
+    return axios.request({ ...config, url, method, data })
+      .then(response => response.data)
+    //   {
+    //   let t1 = performance.now()
+    //   Vue.prototype.$track('timing_complete', {
+    //     name: method,
+    //     event_category: 'API',
+    //     event_label: url,
+    //     value: Math.round(t1 - t0)
+    //   })
+    //   return response.data
+    // })
   }
 }
 

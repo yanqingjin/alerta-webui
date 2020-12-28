@@ -87,6 +87,7 @@ export const en = {
   LastReceiveTime: 'Last Receive Time',
   Customer: 'Customer',
   Service: 'Service',
+  Project: 'Project',
   Environment: 'Environment',
   Resource: 'Resource',
   Event: 'Event',
