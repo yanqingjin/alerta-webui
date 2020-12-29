@@ -9,7 +9,7 @@ import axios from 'axios'
 import { makeStore } from '@/store/modules/auth.store'
 import { makeInterceptors } from '@/services/api/interceptors'
 import { vueAuth } from '@/services/auth'
-// import GoogleAnalytics from '@/plugins/analytics'
+import GoogleAnalytics from '@/plugins/analytics'
 import i18n from '@/plugins/i18n'
 
 import '@/plugins/vuetify'
@@ -43,11 +43,11 @@ bootstrap.getConfig()
     axios.interceptors.response.use(undefined, interceptors.interceptErrors)
     axios.interceptors.response.use(undefined, interceptors.redirectToLogin)
 
-    // Vue.use(GoogleAnalytics, {
-    //   trackingId: config.tracking_id,
-    //   router
-    // })
-    // sync(store, router)
+    Vue.use(GoogleAnalytics, {
+      trackingId: config.tracking_id,
+      router
+    })
+    sync(store, router)
 
     new Vue({
       router,

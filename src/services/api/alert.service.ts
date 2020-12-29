@@ -39,6 +39,7 @@ export default {
   },
   getAlerts(query: object) {
     if (query && queryInProgress) {
+      console.warn('Too many search requests. Cancelling current query.')
       queryInProgress.cancel('Too many search requests. Cancelling current query.')
     }
     queryInProgress = axios.CancelToken.source()
