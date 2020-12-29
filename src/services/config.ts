@@ -1,4 +1,4 @@
-import Axios, { AxiosResponse, AxiosInstance } from 'axios'
+import Axios, { AxiosInstance } from 'axios'
 
 class Config {
   private config: any = {}
@@ -31,13 +31,13 @@ class Config {
         return this.setRemoteConfig(response)
       })
       .catch((error: any) => {
-        console.log(error)
+        console.warn(error)
         throw(error)
       })
   }
 
   getEnvConfig() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       let envConfig = {}
       if (process.env.VUE_APP_ALERTA_ENDPOINT) {
         envConfig['endpoint'] = process.env.VUE_APP_ALERTA_ENDPOINT

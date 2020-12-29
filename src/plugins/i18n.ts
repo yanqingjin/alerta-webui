@@ -24,9 +24,10 @@ if (language.length > 2) {
 
 // variable i18n for translation
 const i18n = new VueI18n({
-  locale: language,
-  fallbackLocale: 'en', // set fallback locale
+  locale: loadLocaleMessages[language] ? language : 'en',
+  // set fallback locale
+  fallbackLocale: 'en',
   messages: loadLocaleMessages
 })
-  
+
 export default i18n

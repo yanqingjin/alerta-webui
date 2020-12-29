@@ -243,6 +243,7 @@ export const en = {
   PageRows: 'Rows per page',
   rows: 'rows',
   RefreshInterval: 'Refresh interval',
+  minutes: 'minutes',
   seconds: 'seconds',
   AckTimeout: 'Ack Timeout',
   ShelveTimeout: 'Shelve timeout',
