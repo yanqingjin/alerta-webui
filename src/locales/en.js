@@ -242,10 +242,11 @@ export const en = {
   PageRows: 'Rows per page',
   rows: 'rows',
   RefreshInterval: 'Refresh interval',
+  hours: 'hours',
+  minutes: 'minutes',
   seconds: 'seconds',
   AckTimeout: 'Ack Timeout',
   ShelveTimeout: 'Shelve timeout',
-  hours: 'hours',
 
   // Profile
   Profile: 'Profile',
