@@ -10,7 +10,7 @@ module.exports = {
   ],
   rules: {
     semi: ["error", "never"],
-    "no-console": "warn",
+    "no-console": "off",
     "no-debugger": "error",
     quotes: ["error", "single"],
     "vue/script-indent": "error",

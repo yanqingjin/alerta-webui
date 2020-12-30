@@ -33,9 +33,8 @@ const state = {
   query: {}, // URLSearchParams
   filter: {  // local defaults
     project: null,
-    // 按我目前的理解，env相当于“降级”了
-    // 所以1. env相关 get / set 会有变化 2. 可能需要在filter里增加env的input
-    // 目前功能ok但是未必“完整”
+    // 1. env相关 get / set 会有变化
+    // 2. 可能需要在filter里增加env的input
     environment: null,
     text: null,
     status: ['open', 'ack'],
@@ -131,7 +130,7 @@ const actions = {
 
     // append filter params to query params
     state.filter.project && params.append('project', state.filter.project)
-    state.filter.environment && params.append('environment', state.filter.environment)
+    // state.filter.environment && params.append('environment', state.filter.environment)
     state.filter.status && state.filter.status.map(st => params.append('status', st))
     state.filter.customer && state.filter.customer.map(c => params.append('customer', c))
     state.filter.service && state.filter.service.map(s => params.append('service', s))
@@ -278,7 +277,7 @@ const actions = {
     return AlertsApi.getProjects(params)
       .then(({ projects }) => commit('SET_PPROJECTS', projects))
   },
-  // 目前的搜索“拿掉”了env
+  // 目前的搜索没有environment
   getEnvironments({ commit }) {
     return AlertsApi.getEnvironments({})
       .then(({ environments }) => commit('SET_ENVIRONMENTS', environments))
@@ -336,11 +335,18 @@ const getters = {
     return state.projects.map(p => p.project).sort()
   },
   counts: state => {
-    return state.projects.reduce((grp, p) => {
-      grp[p.project] = p.count
-      grp['ALL'] = grp['ALL'] + p.count
-      return grp
-    }, {'ALL': 0})
+    return state.projects.reduce(
+      (grp, p) => {
+        grp[p.project] = p.count
+        return grp
+      }, {}
+      // (grp, p) => {
+      //   grp[p.project] = p.count
+      //   grp['ALL'] = grp['ALL'] + p.count
+      //   return grp
+      // },
+      // {'ALL': 0}
+    )
   },
   environments: state => {
     return state.environments.map(e => e.environment).sort()

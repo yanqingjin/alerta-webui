@@ -128,7 +128,7 @@
             {{ $t('DisplayDensity') }}
           </v-list-tile>
           <v-list-tile
-            @click="toCsv(alertsByEnvironment)"
+            @click="toCsv(alertsByProject)"
           >
             {{ $t('DownloadAsCsv') }}
           </v-list-tile>
@@ -212,7 +212,7 @@ export default {
       return this.$config.audio.new || this.$store.getters.getPreference('audioURL')
     },
     defaultTab() {
-      return this.filter.project ? `tab-${this.filter.project}` : 'tab-ALL'
+      return this.filter.project ? `tab-${this.filter.project}` : 'tab-Unknown'
     },
     filter() {
       return this.$store.state.alerts.filter
@@ -244,7 +244,8 @@ export default {
         .reduce((acc, alert) => acc || !alert.repeat, false)
     },
     projects() {
-      return ['ALL'].concat(this.$store.getters['alerts/projects'])
+      // return ['ALL'].concat(this.$store.getters['alerts/projects'])
+      return this.$store.getters['alerts/projects']
     },
     projectCounts() {
       return this.$store.getters['alerts/counts']
@@ -334,6 +335,8 @@ export default {
       this.setFilter(hashMap)
       this.setSort(hashMap)
       this.setPanel(hashMap)
+    } else {
+      this.setFilter({project: 'Unknown'})
     }
     this.currentTab = this.defaultTab
     this.setKiosk(this.isKiosk)
@@ -341,7 +344,9 @@ export default {
     this.refreshAlerts()
   },
   beforeDestroy() {
-    this.cancelTimer()
+    // called when changing page
+    console.info('alerts: beforeDestroy called.')
+    // this.cancelTimer()
   },
   methods: {
     setSearch(query) {
@@ -350,8 +355,7 @@ export default {
     setFilter(filter) {
       this.$store.dispatch('alerts/setFilter', {
         project: filter.project,
-        // TODO
-        environment: filter.environment,
+        // environment: filter.environment,
         text: filter.text,
         status: filter.status ? filter.status.split(',') : null,
         customer: filter.customer ? filter.customer.split(',') : null,
@@ -385,6 +389,8 @@ export default {
       !this.isMute && this.$refs.audio.play()
     },
     setProj(proj) {
+      console.info('alerts: setProj called.')
+      this.cancelTimer()
       this.$store.dispatch('alerts/setFilter', {
         project: proj === 'ALL' ? null : proj
       })
@@ -396,12 +402,12 @@ export default {
       this.detailDialog = true
     },
     refreshAlerts() {
+      this.getProjects()
       this.getAlerts()
         .then(() => {
           this.isNewOpenAlerts && this.playSound()
           this.timer = setTimeout(() => this.refreshAlerts(), this.refreshInterval)
         })
-      this.getProjects()
     },
     cancelTimer() {
       if (this.timer) {

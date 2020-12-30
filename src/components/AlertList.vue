@@ -492,8 +492,7 @@ export default {
     },
     details: false,
     selectedId: null,
-    multiselect: false,
-    timer: null
+    multiselect: false
   }),
   computed: {
     displayDensity() {
@@ -570,15 +569,9 @@ export default {
     }
   },
   beforeDestroy() {
-    this.cancelTimer()
+    console.info('AlertList: beforeDestroy called.')
   },
   methods: {
-    cancelTimer() {
-      if (this.timer) {
-        clearTimeout(this.timer)
-        this.timer = null
-      }
-    },
     duration(item) {
       return moment.duration(moment().diff(moment(item.receiveTime)))
     },

@@ -91,6 +91,7 @@ export default {
     this.refreshCounts()
   },
   beforeDestroy() {
+    console.info('AlertIndicator: beforeDestroy called.')
     this.cancelTimer()
   },
   methods: {
