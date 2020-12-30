@@ -563,7 +563,16 @@ export default {
       this.pagination = Object.assign({}, this.pagination, {rowsPerPage: val})
     }
   },
+  beforeDestroy() {
+    this.cancelTimer()
+  },
   methods: {
+    cancelTimer() {
+      if (this.timer) {
+        clearTimeout(this.timer)
+        this.timer = null
+      }
+    },
     duration(item) {
       return moment.duration(moment().diff(moment(item.receiveTime)))
     },
