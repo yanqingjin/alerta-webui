@@ -344,7 +344,7 @@ export default {
     this.refreshAlerts()
   },
   beforeDestroy() {
-    // called when changing page
+    // Called when changing page
     console.info('alerts: beforeDestroy called.')
     // this.cancelTimer()
   },
